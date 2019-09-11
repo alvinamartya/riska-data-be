@@ -1,9 +1,8 @@
 {
-  "name": "laravel/laravel",
+  "name": "farizhermawan/riska-data-fe",
   "type": "project",
-  "description": "The Laravel Framework.",
+  "description": "riska-data-fe",
   "keywords": [
-    "framework",
     "laravel"
   ],
   "license": "MIT",
