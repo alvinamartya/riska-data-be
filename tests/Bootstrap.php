@@ -8,35 +8,35 @@ use PHPUnit\Runner\BeforeFirstTestHook;
 
 class Bootstrap implements BeforeFirstTestHook, AfterLastTestHook
 {
-  /*
-  |--------------------------------------------------------------------------
-  | Bootstrap The Test Environment
-  |--------------------------------------------------------------------------
-  |
-  | You may specify console commands that execute once before your test is
-  | run. You are free to add your own additional commands or logic into
-  | this file as needed in order to help your test suite run quicker.
-  |
-  */
+    /*
+    |--------------------------------------------------------------------------
+    | Bootstrap The Test Environment
+    |--------------------------------------------------------------------------
+    |
+    | You may specify console commands that execute once before your test is
+    | run. You are free to add your own additional commands or logic into
+    | this file as needed in order to help your test suite run quicker.
+    |
+    */
 
-  use CreatesApplication;
+    use CreatesApplication;
 
-  public function executeBeforeFirstTest(): void
-  {
-    $console = $this->createApplication()->make(Kernel::class);
+    public function executeBeforeFirstTest(): void
+    {
+        $console = $this->createApplication()->make(Kernel::class);
 
-    $commands = [
-      'config:cache',
-      'event:cache',
-    ];
+        $commands = [
+            'config:cache',
+            'event:cache',
+        ];
 
-    foreach ($commands as $command) {
-      $console->call($command);
+        foreach ($commands as $command) {
+            $console->call($command);
+        }
     }
-  }
 
-  public function executeAfterLastTest(): void
-  {
-    array_map('unlink', glob('bootstrap/cache/*.phpunit.php'));
-  }
+    public function executeAfterLastTest(): void
+    {
+        array_map('unlink', glob('bootstrap/cache/*.phpunit.php'));
+    }
 }
