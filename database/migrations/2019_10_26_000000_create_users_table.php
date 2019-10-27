@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
       $table->string('education_grade', 50)->nullable();
       $table->string('education_subject', 100)->nullable();
       $table->string('field_of_work', 100)->nullable();
+      $table->string('status', 30)->nullable();
       $table->string('email', 50)->unique();
       $table->string('provider_name', 10)->nullable();
       $table->string('provider_id', 100)->nullable();

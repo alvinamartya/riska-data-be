@@ -64,6 +64,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDeletedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedBy($value)
+ * @property string|null $status
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereStatus($value)
  */
 class User extends Authenticatable implements JWTSubject
 {
