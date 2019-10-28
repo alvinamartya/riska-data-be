@@ -20,15 +20,6 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.sqlite
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-      run: vendor/bin/phpunit
-    - name: PhpUnit for Laravel
-      uses: svikramjeet/git-action-laravel-phpunit@v1.0
-    - name: PHP Lint
-      uses: michaelw90/PHP-Lint@1.0.0
     - name: Laravel PHP Insights Action
       uses: stefanzweifel/laravel-phpinsights-action@v1.0.0
     - name: Test database migration and rollback
