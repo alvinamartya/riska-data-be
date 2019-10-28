@@ -25,8 +25,23 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
+    - name: PhpUnit for Laravel
+      uses: svikramjeet/git-action-laravel-phpunit@v1.0
+    - name: PHP Lint
+      uses: michaelw90/PHP-Lint@1.0.0
+    - name: Laravel PHP Insights Action
+      uses: stefanzweifel/laravel-phpinsights-action@v1.0.0
     - name: Test database migration and rollback
+      id: migration
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
-      run: php artisan migrate && php artisan migrate:rollback
+      run: |
+        echo "##[set-output name=migrate;]$(php artisan migrate)"
+        echo "##[set-output name=rollback;]$(php artisan migrate:rollback)"
+    - name: Comment PR
+      uses: unsplash/comment-on-pr@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        msg: ${{ steps.migration.outputs.migrate }}
