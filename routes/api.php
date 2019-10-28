@@ -11,7 +11,10 @@
 |
 */
 
-Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
+Route::group([
+    'middleware' => 'api', 
+    'prefix' => 'auth'
+], function () {
   Route::get('login', 'AuthController@login')->name("auth.login");
   Route::get('callback', 'AuthController@callback')->name("auth.callback");
   Route::get('logout', 'AuthController@logout')->name("auth.logout");
