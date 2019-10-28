@@ -20,8 +20,6 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.sqlite
-    - name: Laravel PHP Insights Action
-      uses: stefanzweifel/laravel-phpinsights-action@v1.0.0
     - name: Test database migration and rollback
       id: migration
       env:
