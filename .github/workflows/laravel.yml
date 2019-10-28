@@ -1,6 +1,9 @@
-name: Laravel
+name: Laravel CI
 
-on: [push]
+on:
+  pull_request:
+    branches:
+    - master
 
 jobs:
   laravel-tests:
@@ -22,3 +25,8 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
+    - name: Test database migration and rollback
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: database/database.sqlite
+      run: php artisan migrate && php artisan migrate:rollback
