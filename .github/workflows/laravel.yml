@@ -26,11 +26,6 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: |
-        echo "##[set-output name=migrate;]$(php artisan migrate)"
-        echo "##[set-output name=rollback;]$(php artisan migrate:rollback)"
-    - name: Comment PR
-      uses: unsplash/comment-on-pr@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        msg: ${{ steps.migration.outputs.migrate }}
+        php artisan migrate
+        php artisan migrate:rollback
+        
