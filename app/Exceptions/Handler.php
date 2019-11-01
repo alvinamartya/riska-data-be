@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -52,12 +53,16 @@ class Handler extends ExceptionHandler
   {
     // This will replace all api exception with
     // a JSON response.
-    if (substr($request->path(), 0, 4) == "api/" || ($request->route() != null && in_array("api", $request->route()->middleware()))) {
+    if (substr($request->getPathInfo(), 0, 5) == "/api/" || ($request->route() != null && in_array("api", $request->route()->middleware()))) {
       $status_code = 500;
+      $msg = $exception->getMessage();
       if ($exception instanceof ModelNotFoundException) $status_code = 404;
       else if ($exception instanceof AuthenticationException) $status_code = 401;
-
-      return response()->json(['error' => $exception->getMessage()], $status_code);
+      else if ($exception instanceof NotFoundHttpException) {
+        $status_code = 404;
+        $msg = "API not found";
+      }
+      return response()->json(['error' => $msg], $status_code);
     }
 
     return parent::render($request, $exception);
