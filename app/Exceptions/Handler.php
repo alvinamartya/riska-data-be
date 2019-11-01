@@ -52,7 +52,7 @@ class Handler extends ExceptionHandler
   {
     // This will replace all api exception with
     // a JSON response.
-    if (in_array("api", $request->route()->middleware())) {
+    if (substr($request->path(), 0, 4) == "api/" || ($request->route() != null && in_array("api", $request->route()->middleware()))) {
       $status_code = 500;
       if ($exception instanceof ModelNotFoundException) $status_code = 404;
       else if ($exception instanceof AuthenticationException) $status_code = 401;
