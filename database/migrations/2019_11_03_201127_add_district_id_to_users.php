@@ -14,8 +14,8 @@ class AddDistrictIdToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->char('district_id', 7)->index();
-            $table->foreign('district_id')->references('id')->on('district')->onDelete('restrict');
+            $table->char('district_id', 7)->nullable()->index();
+            $table->foreign('district_id')->references('id')->on('district')->onDelete('set null');
         });
     }
 
