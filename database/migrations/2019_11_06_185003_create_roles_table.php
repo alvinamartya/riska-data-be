@@ -17,6 +17,9 @@ class CreateRolesTable extends Migration
       $table->smallIncrements('id');
       $table->string('name', 100);
       $table->string('description');
+      $table->string('created_by', 100)->nullable();
+      $table->string('updated_by', 100)->nullable();
+      $table->timestamps();
     });
   }
 
