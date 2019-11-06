@@ -15,9 +15,9 @@ Route::group([
     'middleware' => 'api', 
     'prefix' => 'auth'
 ], function () {
-  Route::get('login', 'AuthController@login')->name("auth.login");
-  Route::get('callback', 'AuthController@callback')->name("auth.callback");
-  Route::get('logout', 'AuthController@logout')->name("auth.logout");
-  Route::get('refresh', 'AuthController@refresh')->name("auth.refresh");
-  Route::get('me', 'AuthController@me')->name("auth.me");
+  Route::get('login', 'AuthController@login');
+  Route::get('callback', 'AuthController@callback');
+  Route::get('logout', 'AuthController@logout');
+  Route::get('refresh', 'AuthController@refresh');
+  Route::get('me', 'AuthController@me');
 });
