@@ -1,5 +1,6 @@
 <?php
 
+use ProvinceSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,5 +12,10 @@ class DatabaseSeeder extends Seeder
    */
   public function run()
   {
+    $this->call([
+        ProvinceSeeder::class,
+        RegencySeeder::class,
+        DistrictSeeder::class,
+    ]);
   }
 }
