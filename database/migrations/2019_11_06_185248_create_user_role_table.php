@@ -17,7 +17,7 @@ class CreateUserRoleTable extends Migration
       $table->bigIncrements('id');
       $table->unsignedSmallInteger('role_id');
       $table->unsignedBigInteger('user_id');
-      $table->boolean("is_active");
+      $table->boolean("is_active")->default(true);
       $table->timestamp("expired_at")->nullable();
 
       $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
