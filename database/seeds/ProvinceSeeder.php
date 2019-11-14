@@ -50,7 +50,7 @@ class ProvinceSeeder extends Seeder
         ];
 
         foreach ($provs as $item) {
-            Province::create($item);
+            Province::updateOrCreate($item);
         }
     }
 }
