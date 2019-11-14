@@ -10,14 +10,12 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
- 
-Route::group([
-    'middleware' => 'api', 
-    'prefix' => 'auth'
-], function () {
-  Route::get('login', 'AuthController@login');
-  Route::get('callback', 'AuthController@callback');
-  Route::get('logout', 'AuthController@logout');
-  Route::get('refresh', 'AuthController@refresh');
-  Route::get('me', 'AuthController@me');
+
+Route::group(['prefix' => 'v1', 'namespace'  => 'v1'], function () {
+
+  Route::get('auth/login', 'AuthController@login');
+  Route::get('auth/callback', 'AuthController@callback');
+  Route::get('auth/logout', 'AuthController@logout');
+  Route::get('auth/refresh', 'AuthController@refresh');
+  Route::get('auth/me', 'AuthController@me');
 });
