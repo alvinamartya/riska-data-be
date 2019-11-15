@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Regency;
 use Illuminate\Database\Seeder;
 
 class RegencySeeder extends Seeder
@@ -529,7 +530,7 @@ class RegencySeeder extends Seeder
         ];
 
         foreach ($regencies as $item) {
-            factory(App\Models\Regency::class)->create($item);
+            Regency::updateOrCreate($item);
         }
     }
 }

@@ -66,6 +66,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedBy($value)
  * @property string|null $status
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereStatus($value)
+ * @property string|null $district_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDistrictId($value)
  */
 class User extends Authenticatable implements JWTSubject
 {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\District;
 use Illuminate\Database\Seeder;
 
 class DistrictSeeder extends Seeder
@@ -7233,7 +7234,7 @@ class DistrictSeeder extends Seeder
         if($continue == 'y'){
             $this->command->info('Generating Data... Please Wait!');
             foreach ($districts as $item) {
-                factory(App\Models\District::class)->create($item);
+                District::updateOrCreate($item);
             }
         }
     }

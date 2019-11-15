@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Province;
 use Illuminate\Database\Seeder;
 
 class ProvinceSeeder extends Seeder
@@ -49,7 +50,7 @@ class ProvinceSeeder extends Seeder
         ];
 
         foreach ($provs as $item) {
-            $prov = factory(App\Models\Province::class)->create($item);
+            Province::updateOrCreate($item);
         }
     }
 }
