@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Role extends Model
 {
+  protected $hidden = ["created_at", "created_by", "updated_at", "updated_by"];
 
   protected static function boot()
   {
