@@ -18,12 +18,14 @@ class CreateUserTrainingTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->smallInteger('training_id')->unsigned();
             $table->date('date');
-            $table->timestamp('created_at')->nullable();
+            //$table->timestamp('created_at')->nullable();
             $table->string('created_by', 100);
-            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))->nullable();
+            //$table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))->nullable();
             $table->string('updated_by', 100);
-            $table->timestamp('deleted_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))->nullable();
+            //$table->timestamp('deleted_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))->nullable();
             $table->string('deleted_by', 100)->nullable();
+            $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('training_id')->references('id')->on('trainings');
