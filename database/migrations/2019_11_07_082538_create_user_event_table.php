@@ -21,12 +21,16 @@ class CreateUserEventTable extends Migration
             $table->string('role', 155);
             $table->string('description', 1000)->nullable();
             $table->boolean('is_internal');
-            $table->timestamp('created_at');
+
             $table->string('created_by', 100);
-            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+
             $table->string('updated_by', 100);
-            $table->timestamp('deleted_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+
             $table->string('deleted_by', 100);
+
+            $table->timestamps();
+
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users');
         });
