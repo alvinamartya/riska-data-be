@@ -17,16 +17,8 @@ class CreateTrainingsTable extends Migration
             $table->smallIncrements('id');
             $table->string('name', 155);
             $table->string('description', 500)->nullable();
-
             $table->string('created_by', 100);
-
-            $table->string('updated_by', 100);
-
-            $table->string('deleted_by', 100);
-
-            $table->timestamps();
-
-            $table->softDeletes();
+            $table->timestamp('created_at');
 
         });
     }

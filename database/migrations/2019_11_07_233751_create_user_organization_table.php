@@ -20,15 +20,10 @@ class CreateUserOrganizationTable extends Migration
             $table->string('name',100);
             $table->string('role', 155);
             $table->string('description', 1000)->nullable();
-
             $table->string('created_by', 100);
-
             $table->string('updated_by', 100);
-
             $table->string('deleted_by', 100);
-
             $table->timestamps();
-
             $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users');
