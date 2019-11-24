@@ -19,7 +19,7 @@ class CreateUserOrganizationTable extends Migration
             $table->smallInteger('year');
             $table->string('name',100);
             $table->string('role', 155);
-            $table->string('description', 1000)->nullable();
+            $table->text('description')->nullable();
             $table->string('created_by', 100);
             $table->string('updated_by', 100);
             $table->string('deleted_by', 100);
