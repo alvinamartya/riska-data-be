@@ -13,12 +13,15 @@ class CreateUserRoleTable extends Migration
    */
   public function up()
   {
-    Schema::create('user_role', function (Blueprint $table) {
+    Schema::create('role_user', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->unsignedSmallInteger('role_id');
       $table->unsignedBigInteger('user_id');
       $table->boolean("is_active")->default(true);
       $table->timestamp("expired_at")->nullable();
+
+      $table->index(['role_id', 'user_id']);
+      $table->unique(['role_id', 'user_id']);
 
       $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
       $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -32,6 +35,6 @@ class CreateUserRoleTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('user_role');
+    Schema::dropIfExists('role_user');
   }
 }
