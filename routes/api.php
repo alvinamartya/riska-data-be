@@ -25,5 +25,9 @@ Route::group(['prefix' => 'v1', 'namespace'  => 'v1'], function () {
     Route::get('roles/{roleId}', 'RoleController@show');
     Route::put('roles/{roleId}', 'RoleController@update');
     Route::delete('roles/{roleId}', 'RoleController@destroy');
+
+    Route::post('roles/{roleId}/users', 'RoleController@attachUser');
+    Route::put('roles/{roleId}/users/{userId}', 'RoleController@updateAttachedUser');
+    Route::delete('roles/{roleId}/users/{userId}', 'RoleController@detachUser');
   });
 });
