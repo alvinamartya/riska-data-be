@@ -20,6 +20,5 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Regency extends Model
 {
-    protected $table = 'regency';
     public $timestamps = false;
 }
