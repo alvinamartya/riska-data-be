@@ -30,6 +30,9 @@ Route::group(['prefix' => 'v1', 'namespace'  => 'v1'], function () {
     Route::put('roles/{roleId}/users/{userId}', 'RoleController@updateAttachedUser');
     Route::delete('roles/{roleId}/users/{userId}', 'RoleController@detachUser');
 
+    Route::post('roles/{roleId}/permissions', 'RoleController@attachPermission');
+    Route::delete('roles/{roleId}/permissions/{permissionId}', 'RoleController@detachPermission');
+
     Route::get('permissions', 'PermissionController@index');
     Route::post('permissions', 'PermissionController@store');
     Route::get('permissions/{permissionId}', 'PermissionController@show');

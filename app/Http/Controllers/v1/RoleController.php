@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v1;
 
 use App\Constants\HttpStatusCode;
 use App\Http\Controllers\Controller;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -20,7 +21,7 @@ class RoleController extends Controller
 
   public function show($roleId) {
     try {
-      $role = Role::whereId($roleId)->with('users')->firstOrFail();
+      $role = Role::whereId($roleId)->with(['users', 'permissions'])->firstOrFail();
     } catch (\Exception $e) {
       return response()->json(["error" => "Role with requested ID not found"], HttpStatusCode::NOT_FOUND);
     }
@@ -108,5 +109,35 @@ class RoleController extends Controller
       return response()->json(["error" => "Role with requested ID is not found"], HttpStatusCode::NOT_FOUND);
     }
     return response()->json(["message" => "User successfully detached from the role"], HttpStatusCode::OK);
+  }
+
+  public function attachPermission(Request $request, $roleId) {
+    try {
+      $permissionId = $request->input("permissionId");
+      $permission = Permission::whereId($permissionId)->firstOrFail();
+    } catch (\Exception $e) {
+      return response()->json(["error" => "Permission with requested ID is not found"], HttpStatusCode::NOT_FOUND);
+    }
+    try {
+      $role = Role::whereId($roleId)->firstOrFail();
+    } catch (\Exception $e) {
+      return response()->json(["error" => "Role with requested ID is not found"], HttpStatusCode::NOT_FOUND);
+    }
+    try {
+      $role->permissions()->attach($permission->id);
+    } catch (\Exception $e) {
+      return response()->json(["error" => "Permission already attached to this role"], HttpStatusCode::BAD_REQUEST);
+    }
+    return response()->json(["message" => "Permission successfully attached to the role"], HttpStatusCode::CREATED);
+  }
+
+  public function detachPermission($roleId, $permissionId) {
+    try {
+      $role = Role::whereId($roleId)->firstOrFail();
+      $role->permissions()->detach($permissionId);
+    } catch (\Exception $e) {
+      return response()->json(["error" => "Role with requested ID is not found"], HttpStatusCode::NOT_FOUND);
+    }
+    return response()->json(["message" => "Permission successfully detached from the role"], HttpStatusCode::OK);
   }
 }
