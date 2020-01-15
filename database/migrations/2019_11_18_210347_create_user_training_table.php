@@ -13,7 +13,7 @@ class CreateUserTrainingTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_training', function (Blueprint $table) {
+        Schema::create('training_user', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
             $table->smallInteger('training_id')->unsigned();
