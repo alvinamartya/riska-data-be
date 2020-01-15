@@ -23,7 +23,6 @@ class CreateUserTrainingTable extends Migration
             $table->string('deleted_by', 100)->nullable();
             $table->timestamps();
             $table->softDeletes();
-
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('training_id')->references('id')->on('trainings');
         });
