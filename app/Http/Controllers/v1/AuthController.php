@@ -70,7 +70,7 @@ class AuthController extends Controller
   {
     /** @var User $user */
     $user = auth()->user();
-    $roles = $user->roles;
+    $roles = $user->roles()->get();
     $permissions = [];
     foreach ($roles as $role) {
       $permissions = array_merge($permissions, $role->permissions->pluck('name')->all());
