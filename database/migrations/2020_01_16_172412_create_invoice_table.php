@@ -14,17 +14,18 @@ class CreateInvoiceTable extends Migration
   public function up()
   {
     Schema::create('invoice', function (Blueprint $table) {
-      $table->bigIncrements('id');
+      $table->bigIncrements('id')->primary();
       $table->bigInteger('user_program_id');
       $table->string('code', 45);
       $table->date('invoice_date');
       $table->decimal('amount');
-      $table->date('created_at');
       $table->string('created_by', 100);
-      $table->date('updated_at')->nullable();
       $table->string('updated_by', 100)->nullable();
-      $table->date('deleted_at')->nullable();
       $table->string('deleted_by', 100)->nullable();
+      $table->timestamps();
+      $table->softDeletes();
+      
+      $table->foreign('user_program_id')->references('id')->on('user_program')->onDelete('cascade');
     });
   }
 

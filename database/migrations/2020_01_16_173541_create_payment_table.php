@@ -14,8 +14,8 @@ class CreatePaymentTable extends Migration
     public function up()
     {
         Schema::create('payment', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('invoice_id')->unsigned();
+            $table->bigIncrements('id')->primary();
+            $table->bigInteger('invoice_id');
             $table->string('payment_type', 100);
             $table->decimal('amount');
             $table->string('payment_proof', 255)->nullable();
@@ -24,10 +24,11 @@ class CreatePaymentTable extends Migration
             $table->boolean('approval_status')->nullable();
             $table->date('approval_date')->nullable();
             $table->string('approval_user_id', 100)->nullable();
-            $table->date('created_at');
             $table->string('created_by', 100);
-            $table->date('updated_at')->nullable();
             $table->string('updated_by', 100)->nullable();
+            $table->string('deleted_by', 100)->nullable();
+            $table->timestamps();
+            $table->softDeletes();
       
             $table->foreign('invoice_id')->references('id')->on('invoice')->onDelete('cascade');
         });
