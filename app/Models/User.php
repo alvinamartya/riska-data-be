@@ -6,7 +6,6 @@ use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-
 /**
  * App\Models\User
  *
@@ -24,14 +23,21 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string|null $education_grade
  * @property string|null $education_subject
  * @property string|null $field_of_work
+ * @property string|null $status
  * @property string $email
  * @property string|null $provider_name
  * @property string|null $provider_id
- * @property string|null $remember_token
+ * @property string|null $created_by
+ * @property string|null $updated_by
+ * @property string|null $deleted_by
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property string|null $district_id
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
+ * @property-read int|null $roles_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User query()
@@ -39,6 +45,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereBirthDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereBirthPlace($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDistrictId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEducationGrade($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEducationSubject($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmail($value)
@@ -51,21 +61,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePhoto($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereProviderId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereProviderName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereSocialMedia($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereWhatsappNumber($value)
  * @mixin \Eloquent
- * @property string|null $created_by
- * @property string|null $updated_by
- * @property string|null $deleted_by
- * @property string|null $deleted_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedBy($value)
- * @property string|null $status
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereStatus($value)
  */
 class User extends Authenticatable implements JWTSubject
 {
@@ -100,5 +101,9 @@ class User extends Authenticatable implements JWTSubject
   public function getJWTCustomClaims()
   {
     return [];
+  }
+
+  public function roles() {
+    return $this->belongsToMany(Role::class);
   }
 }

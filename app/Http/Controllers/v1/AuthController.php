@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v1;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Laravel\Socialite\Contracts\Provider;
 use Laravel\Socialite\Facades\Socialite;
@@ -67,7 +68,14 @@ class AuthController extends Controller
    */
   public function me()
   {
-    return response()->json(auth()->user());
+    /** @var User $user */
+    $user = auth()->user();
+    $roles = $user->roles()->get();
+    $permissions = [];
+    foreach ($roles as $role) {
+      $permissions = array_merge($permissions, $role->permissions->pluck('name')->all());
+    }
+    return response()->json(['profile' => $user, 'roles' => $roles->pluck('name')->all(), 'permissions' => $permissions]);
   }
 
   /**

@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
     ValidatePostSize::class,
     TrimStrings::class,
     ConvertEmptyStringsToNull::class,
+    HandleCors::class,
   ];
 
   /**
@@ -59,9 +60,8 @@ class Kernel extends HttpKernel
     ),
 
     'api' => [
-      'throttle:60,1',
-      'bindings',
-      HandleCors::class,
+//      'throttle:60,1',
+      'bindings'
     ],
   ];
 
