@@ -13,7 +13,7 @@ class CreateUserOrganizationTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_organization', function (Blueprint $table) {
+        Schema::create('organization_user', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
             $table->smallInteger('year');
@@ -21,8 +21,8 @@ class CreateUserOrganizationTable extends Migration
             $table->string('role', 155);
             $table->text('description')->nullable();
             $table->string('created_by', 100);
-            $table->string('updated_by', 100);
-            $table->string('deleted_by', 100);
+            $table->string('updated_by', 100)->nullable();
+            $table->string('deleted_by', 100)->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -37,6 +37,6 @@ class CreateUserOrganizationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_organization');
+        Schema::dropIfExists('organization_user');
     }
 }

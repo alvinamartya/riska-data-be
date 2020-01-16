@@ -19,7 +19,7 @@ class CreateUserTrainingTable extends Migration
             $table->smallInteger('training_id')->unsigned();
             $table->date('date');
             $table->string('created_by', 100);
-            $table->string('updated_by', 100);
+            $table->string('updated_by', 100)->nullable();
             $table->string('deleted_by', 100)->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -35,6 +35,6 @@ class CreateUserTrainingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_training');
+        Schema::dropIfExists('training_user');
     }
 }

@@ -18,8 +18,8 @@ class CreateTrainingsTable extends Migration
             $table->string('name', 155);
             $table->text('description')->nullable();
             $table->string('created_by', 100);
-            $table->string('updated_by', 100);
-            $table->string('deleted_by', 100);
+            $table->string('updated_by', 100)->nullable();
+            $table->string('deleted_by', 100)->nullable();
             $table->timestamps();
             $table->softDeletes();
 
