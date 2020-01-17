@@ -13,7 +13,7 @@ class CreateUserEventTable extends Migration
      */
     public function up()
     {
-        Schema::create('event_user', function (Blueprint $table) {
+        Schema::create('user_event', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
             $table->smallInteger('year');
@@ -38,6 +38,6 @@ class CreateUserEventTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_user');
+        Schema::dropIfExists('user_event');
     }
 }
