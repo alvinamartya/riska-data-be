@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProgramTable extends Migration
+class CreateProgramsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateProgramTable extends Migration
      */
     public function up()
     {
-        Schema::create('program', function (Blueprint $table) {
-            $table->bigIncrements('id')->primary();
-            $table->bigInteger('department_id');
-            $table->bigInteger('batch_id');
+        Schema::create('programs', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('department_id');
+            $table->unsignedBigInteger('batch_id');
             $table->string('name', 100);
             $table->text('description');
             $table->json('contact_person')->nullable();
@@ -31,8 +31,8 @@ class CreateProgramTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
-            $table->foreign('program_id')->references('id')->on('program')->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('batch_id')->references('id')->on('batches')->onDelete('restrict')->onUpdate('cascade');
         });
     }
 
@@ -43,6 +43,6 @@ class CreateProgramTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('program');
+        Schema::dropIfExists('programs');
     }
 }

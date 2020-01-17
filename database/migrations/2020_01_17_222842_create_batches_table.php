@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBatchTable extends Migration
+class CreateBatchesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateBatchTable extends Migration
      */
     public function up()
     {
-        Schema::create('batch', function (Blueprint $table) {
-        $table->bigIncrements('id')->primary();
+        Schema::create('batches', function (Blueprint $table) {
+        $table->bigIncrements('id');
         $table->string('name', 100);
         $table->string('created_by', 100);
         $table->string('updated_by', 100)->nullable();
@@ -31,6 +31,6 @@ class CreateBatchTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('batch');
+        Schema::dropIfExists('batches');
     }
 }
