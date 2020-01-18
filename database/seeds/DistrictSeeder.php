@@ -7234,7 +7234,7 @@ class DistrictSeeder extends Seeder
         if($continue == 'y'){
             $this->command->info('Generating Data... Please Wait!');
             foreach ($districts as $item) {
-                District::updateOrCreate($item);
+                District::create($item);
             }
         }
     }
