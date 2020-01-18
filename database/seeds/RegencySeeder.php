@@ -530,7 +530,7 @@ class RegencySeeder extends Seeder
         ];
 
         foreach ($regencies as $item) {
-            Regency::updateOrCreate($item);
+            Regency::create($item);
         }
     }
 }
