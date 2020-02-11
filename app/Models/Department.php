@@ -25,13 +25,6 @@ class Department extends Model
             if(!$department->exists) $department->created_by = auth()->user()->fullname;
             else $department->updated_by = auth()->user()->fullname;
         });
-        static::deleting(function (Department $department) {
-            $department->deleted_by = auth()->user()->fullname;
-        });
     }
 
-    public function programs()
-    {
-        return $this->hasMany('App\Models\Program');
-    }
 }

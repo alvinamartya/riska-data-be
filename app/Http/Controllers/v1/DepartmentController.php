@@ -32,7 +32,7 @@ class DepartmentController extends Controller
         } catch (QueryException $e) {
             return response()->json(["error" => $e->errorInfo[2]], HttpStatusCode::SERVER_ERROR);
         }
-        return response()->json(["message" => "Depatment successfully created", "data" => $department], HttpStatusCode::CREATED);
+        return response()->json(["message" => "Department successfully created", "data" => $department], HttpStatusCode::CREATED);
     }
 
     public function update(Request $request, Department $department)
@@ -44,7 +44,7 @@ class DepartmentController extends Controller
         } catch (QueryException $e) {
             return response()->json(["error" => $e->errorInfo[2]], HttpStatusCode::SERVER_ERROR);
         }
-        return response()->json(["message" => "Depatment successfully updated"], HttpStatusCode::OK);
+        return response()->json(["message" => "Department successfully updated"], HttpStatusCode::OK);
     }
     
     public function destroy(Department $department)
@@ -54,6 +54,6 @@ class DepartmentController extends Controller
         } catch (\Exception $e) {
             return response()->json(["error" => $e], HttpStatusCode::SERVER_ERROR);
         }
-        return response()->json(["message" => "Depatment successfully deleted"], HttpStatusCode::OK);
+        return response()->json(["message" => "Department successfully deleted"], HttpStatusCode::OK);
     }
 }
