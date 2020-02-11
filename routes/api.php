@@ -40,5 +40,6 @@ Route::group(['prefix' => 'v1', 'namespace'  => 'v1'], function () {
     Route::delete('permissions/{permissionId}', 'PermissionController@destroy');
 
     Route::resource('batches', 'BatchController')->except(['create', 'edit']);
+    Route::resource('departments', 'DepartmentController')->except(['create', 'edit']);
   });
 });
