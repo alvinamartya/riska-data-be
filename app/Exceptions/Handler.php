@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
@@ -46,7 +47,7 @@ class Handler extends ExceptionHandler
    *
    * @param \Illuminate\Http\Request $request
    * @param \Exception $exception
-   * @return \Illuminate\Http\Response
+   * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
    */
 
   public function render($request, Exception $exception)
@@ -56,7 +57,12 @@ class Handler extends ExceptionHandler
     if (substr($request->getPathInfo(), 0, 5) == "/api/" || ($request->route() != null && in_array("api", $request->route()->middleware()))) {
       $status_code = 500;
       $msg = $exception->getMessage();
-      if ($exception instanceof ModelNotFoundException) $status_code = 404;
+      if ($exception instanceof ModelNotFoundException) {
+        $status_code = 404;
+        $model = explode("\\", $exception->getModel());
+        $msg = sprintf("%s not found [%s]", end($model), join(", ", $exception->getIds()));
+      }
+      else if ($exception instanceof ConflictHttpException) $status_code = 409;
       else if ($exception instanceof AuthenticationException) $status_code = 401;
       else if ($exception instanceof NotFoundHttpException) {
         $status_code = 404;
