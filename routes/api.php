@@ -20,6 +20,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'v1'], function () {
   Route::get('auth/me', 'AuthController@me')->name('auth.me');
 
   Route::group(['middleware' => 'auth:api'], function () {
+    Route::resource('users', 'UserController')->except(['create', 'edit', 'store', 'destroy', 'update']);
     Route::resource('roles', 'RoleController')->except(['create', 'edit']);
     Route::resource('permissions', 'PermissionController')->except(['create', 'edit']);
     Route::resource('roles.permissions', 'RolePermissionController')->except(['create', 'edit', 'show', 'update']);
