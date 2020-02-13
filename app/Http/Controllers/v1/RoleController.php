@@ -14,12 +14,14 @@ use Illuminate\Http\Request;
 class RoleController extends Controller
 {
 
-  public function index() {
+  public function index()
+  {
     $roles = Role::withCount('users')->paginate();
     return response()->json($roles, HttpStatusCode::OK);
   }
 
-  public function show($roleId) {
+  public function show($roleId)
+  {
     try {
       $role = Role::whereId($roleId)->with(['users', 'permissions'])->firstOrFail();
     } catch (\Exception $e) {
@@ -28,7 +30,8 @@ class RoleController extends Controller
     return response()->json($role, HttpStatusCode::OK);
   }
 
-  public function store(Request $request) {
+  public function store(Request $request)
+  {
     try {
       $role = new Role();
       $role->name = $request->input("name");
@@ -68,7 +71,8 @@ class RoleController extends Controller
     return response()->json(["message" => "Role successfully deleted"], HttpStatusCode::OK);
   }
 
-  public function attachUser(Request $request, $roleId) {
+  public function attachUser(Request $request, $roleId)
+  {
     try {
       $email = $request->input("email");
       $user = User::whereEmail($email)->firstOrFail();
@@ -88,7 +92,8 @@ class RoleController extends Controller
     return response()->json(["message" => "User successfully attached to the role"], HttpStatusCode::CREATED);
   }
 
-  public function updateAttachedUser(Request $request, $roleId, $userId) {
+  public function updateAttachedUser(Request $request, $roleId, $userId)
+  {
     try {
       $isActive = $request->input("is_active");
       $expiredAt = $request->input("expired_at");
@@ -101,7 +106,8 @@ class RoleController extends Controller
     return response()->json(["message" => "Attached user for the role successfully updated"], HttpStatusCode::OK);
   }
 
-  public function detachUser($roleId, $userId) {
+  public function detachUser($roleId, $userId)
+  {
     try {
       $role = Role::whereId($roleId)->firstOrFail();
       $role->users()->detach($userId);
@@ -111,7 +117,8 @@ class RoleController extends Controller
     return response()->json(["message" => "User successfully detached from the role"], HttpStatusCode::OK);
   }
 
-  public function attachPermission(Request $request, $roleId) {
+  public function attachPermission(Request $request, $roleId)
+  {
     try {
       $permissionId = $request->input("permissionId");
       $permission = Permission::whereId($permissionId)->firstOrFail();
@@ -131,7 +138,8 @@ class RoleController extends Controller
     return response()->json(["message" => "Permission successfully attached to the role"], HttpStatusCode::CREATED);
   }
 
-  public function detachPermission($roleId, $permissionId) {
+  public function detachPermission($roleId, $permissionId)
+  {
     try {
       $role = Role::whereId($roleId)->firstOrFail();
       $role->permissions()->detach($permissionId);

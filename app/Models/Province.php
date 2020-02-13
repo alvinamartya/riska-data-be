@@ -15,8 +15,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Province whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Province whereName($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Regency[] $regencies
+ * @property-read int|null $regencies_count
  */
 class Province extends Model
 {
-    public $timestamps = false;
+  public $timestamps = false;
+
+  public function regencies()
+  {
+    return $this->hasMany(Regency::class);
+  }
 }

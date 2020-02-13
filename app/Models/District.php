@@ -17,8 +17,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\District whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\District whereRegencyId($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Regency $regency
  */
 class District extends Model
 {
-    public $timestamps = false;
+  public $timestamps = false;
+
+  public function regency()
+  {
+    return $this->belongsTo(Regency::class);
+  }
 }

@@ -49,12 +49,12 @@ class AuthController extends Controller
 
     $user = User::whereEmail($login->getEmail())->first();
     if (!$user) {
-      $user                    = new User;
+      $user = new User;
       $user->fullname = $login->getName();
       $user->photo = $login->getAvatar();
-      $user->provider_name     = "google";
-      $user->provider_id       = $login->getId();
-      $user->email             = $login->getEmail();
+      $user->provider_name = "google";
+      $user->provider_id = $login->getId();
+      $user->email = $login->getEmail();
       $user->save();
     }
 
@@ -102,7 +102,7 @@ class AuthController extends Controller
   /**
    * Get the token array structure.
    *
-   * @param  string $token
+   * @param string $token
    *
    * @return \Illuminate\Http\JsonResponse
    */

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\Role
@@ -29,25 +30,32 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereUpdatedBy($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Role onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Role withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Role withoutTrashed()
  */
 class Role extends Model
 {
-  protected $hidden = ["created_at", "created_by", "updated_at", "updated_by"];
+  use SoftDeletes, Auditable;
 
-  protected static function boot()
+  protected $hidden = [
+    'created_at',
+    'created_by',
+    'updated_at',
+    'updated_by',
+    'deleted_at',
+    'deleted_by',
+  ];
+
+  public function users()
   {
-    parent::boot();
-    static::saving(function (Role $role) {
-      if(!$role->exists) $role->created_by = auth()->user()->fullname;
-      else $role->updated_by = auth()->user()->fullname;
-    });
-  }
-
-  public function users() {
     return $this->belongsToMany(User::class)->withPivot(['is_active', 'expired_at']);
   }
 
-  public function permissions() {
+  public function permissions()
+  {
     return $this->belongsToMany(Permission::class);
   }
 }

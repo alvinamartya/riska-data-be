@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['prefix' => 'v1', 'namespace'  => 'v1'], function () {
+Route::group(['prefix' => 'v1', 'namespace' => 'v1'], function () {
 
   Route::get('auth/login', 'AuthController@login');
   Route::get('auth/callback', 'AuthController@callback');
@@ -19,7 +19,7 @@ Route::group(['prefix' => 'v1', 'namespace'  => 'v1'], function () {
   Route::get('auth/refresh', 'AuthController@refresh');
   Route::get('auth/me', 'AuthController@me');
 
-  Route::group(['middleware' => 'auth'], function() {
+  Route::group(['middleware' => 'auth'], function () {
     Route::get('roles', 'RoleController@index');
     Route::post('roles', 'RoleController@store');
     Route::get('roles/{roleId}', 'RoleController@show');

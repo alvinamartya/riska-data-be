@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * App\Models\User
@@ -67,20 +68,33 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereWhatsappNumber($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\UserEvent[] $events
+ * @property-read int|null $events_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\UserOrganization[] $organizations
+ * @property-read int|null $organizations_count
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User withoutTrashed()
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Training[] $trainings
+ * @property-read int|null $trainings_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\UserProgram[] $programs
+ * @property-read int|null $programs_count
  */
 class User extends Authenticatable implements JWTSubject
 {
-  use Notifiable;
+  use Notifiable, SoftDeletes, Auditable;
 
   protected $hidden = [
     'provider_name',
     'provider_id',
-    'created_by',
-    'updated_by',
-    'deleted_by',
     'created_at',
+    'created_by',
     'updated_at',
+    'updated_by',
     'deleted_at',
+    'deleted_by',
   ];
 
   /**
@@ -103,7 +117,28 @@ class User extends Authenticatable implements JWTSubject
     return [];
   }
 
-  public function roles() {
+  public function roles()
+  {
     return $this->belongsToMany(Role::class);
+  }
+
+  public function events()
+  {
+    return $this->hasMany(UserEvent::class);
+  }
+
+  public function organizations()
+  {
+    return $this->hasMany(UserOrganization::class);
+  }
+
+  public function trainings()
+  {
+    return $this->belongsToMany(Training::class);
+  }
+
+  public function programs()
+  {
+    return $this->hasMany(UserProgram::class);
   }
 }

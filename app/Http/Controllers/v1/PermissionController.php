@@ -12,12 +12,14 @@ use Illuminate\Http\Request;
 class PermissionController extends Controller
 {
 
-  public function index() {
+  public function index()
+  {
     $permissions = Permission::paginate();
     return response()->json($permissions, HttpStatusCode::OK);
   }
 
-  public function show($permissionId) {
+  public function show($permissionId)
+  {
     try {
       $permission = Permission::whereId($permissionId)->firstOrFail();
     } catch (\Exception $e) {
@@ -26,7 +28,8 @@ class PermissionController extends Controller
     return response()->json($permission, HttpStatusCode::OK);
   }
 
-  public function store(Request $request) {
+  public function store(Request $request)
+  {
     try {
       $permission = new Permission();
       $permission->name = $request->input("name");
