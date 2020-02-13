@@ -17,7 +17,7 @@ class RoleController extends Controller
 
   public function show(Role $role)
   {
-    return response()->json($role->with(['users', 'permissions']), HttpStatusCode::OK);
+    return response()->json($role, HttpStatusCode::OK);
   }
 
   public function store(Request $request)
