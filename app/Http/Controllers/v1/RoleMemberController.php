@@ -8,7 +8,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class RoleUserController extends Controller
+class RoleMemberController extends Controller
 {
 
   public function index(Role $role)

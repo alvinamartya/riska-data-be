@@ -23,7 +23,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'v1'], function () {
     Route::resource('roles', 'RoleController')->except(['create', 'edit']);
     Route::resource('permissions', 'PermissionController')->except(['create', 'edit']);
     Route::resource('roles.permissions', 'RolePermissionController')->except(['create', 'edit', 'show', 'update']);
-    Route::resource('roles.users', 'RoleUserController')->except(['create', 'edit', 'show']);
+    Route::resource('roles.users', 'RoleMemberController')->except(['create', 'edit', 'show']);
     Route::resource('batches', 'BatchController')->except(['create', 'edit']);
     Route::resource('departments', 'DepartmentController')->except(['create', 'edit']);
   });
