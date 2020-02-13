@@ -35,6 +35,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Program[] $programs
  * @property-read int|null $programs_count
+ * @property string $start_date
+ * @property string $end_date
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch whereEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch whereStartDate($value)
  */
 class Batch extends Model
 {
