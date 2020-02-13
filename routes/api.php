@@ -13,32 +13,17 @@
 
 Route::group(['prefix' => 'v1', 'namespace' => 'v1'], function () {
 
-  Route::get('auth/login', 'AuthController@login');
-  Route::get('auth/callback', 'AuthController@callback');
-  Route::get('auth/logout', 'AuthController@logout');
-  Route::get('auth/refresh', 'AuthController@refresh');
-  Route::get('auth/me', 'AuthController@me');
+  Route::get('auth/login', 'AuthController@login')->name('auth.login');
+  Route::get('auth/callback', 'AuthController@callback')->name('auth.callback');
+  Route::get('auth/logout', 'AuthController@logout')->name('auth.logout');
+  Route::get('auth/refresh', 'AuthController@refresh')->name('auth.refresh');
+  Route::get('auth/me', 'AuthController@me')->name('auth.me');
 
-  Route::group(['middleware' => 'auth'], function () {
-    Route::get('roles', 'RoleController@index');
-    Route::post('roles', 'RoleController@store');
-    Route::get('roles/{roleId}', 'RoleController@show');
-    Route::put('roles/{roleId}', 'RoleController@update');
-    Route::delete('roles/{roleId}', 'RoleController@destroy');
-
-    Route::post('roles/{roleId}/users', 'RoleController@attachUser');
-    Route::put('roles/{roleId}/users/{userId}', 'RoleController@updateAttachedUser');
-    Route::delete('roles/{roleId}/users/{userId}', 'RoleController@detachUser');
-
-    Route::post('roles/{roleId}/permissions', 'RoleController@attachPermission');
-    Route::delete('roles/{roleId}/permissions/{permissionId}', 'RoleController@detachPermission');
-
-    Route::get('permissions', 'PermissionController@index');
-    Route::post('permissions', 'PermissionController@store');
-    Route::get('permissions/{permissionId}', 'PermissionController@show');
-    Route::put('permissions/{permissionId}', 'PermissionController@update');
-    Route::delete('permissions/{permissionId}', 'PermissionController@destroy');
-
+  Route::group(['middleware' => 'auth:api'], function () {
+    Route::resource('roles', 'RoleController')->except(['create', 'edit']);
+    Route::resource('permissions', 'PermissionController')->except(['create', 'edit']);
+    Route::resource('roles.permissions', 'RolePermissionController')->except(['create', 'edit', 'show', 'update']);
+    Route::resource('roles.users', 'RoleUserController')->except(['create', 'edit', 'show']);
     Route::resource('batches', 'BatchController')->except(['create', 'edit']);
     Route::resource('departments', 'DepartmentController')->except(['create', 'edit']);
   });
