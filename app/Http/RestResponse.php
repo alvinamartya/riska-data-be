@@ -1,31 +1,30 @@
 <?php
 
-namespace App\Constants;
+namespace App\Http;
 
+use App\Constants\HttpStatusCode;
 use ReflectionClass;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class RestResponse
 {
+  static function data($data, int $code = HttpStatusCode::OK) {
+    return response()->json($data, $code);
+  }
+
   static function message(String $message, int $code = HttpStatusCode::OK) {
     return self::data(["message" => $message], $code);
   }
 
-  static function error(\Exception $e, int $code = HttpStatusCode::SERVER_ERROR) {
-    return response()->json($e, $code);
+  static function error(String $message, int $code = HttpStatusCode::SERVER_ERROR) {
+    return self::data(["error" => $message], $code);
   }
 
   static function conflict(String $message) {
-    return response()->json(new ConflictHttpException($message), HttpStatusCode::CONFLICT);
+    return self::error($message, HttpStatusCode::CONFLICT);
   }
 
   static function unauthorized(String $message = "You are not authorized to do this!") {
-    return response()->json(new AccessDeniedHttpException($message), HttpStatusCode::UNAUTHORIZED);
-  }
-
-  static function data($data, int $code = HttpStatusCode::OK) {
-    return response()->json($data, $code);
+    return self::error($message, HttpStatusCode::UNAUTHORIZED);
   }
 
   static function created($entity) {

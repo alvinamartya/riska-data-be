@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\v1;
 
 use App\Constants\HttpStatusCode;
-use App\Constants\RestResponse;
 use App\Http\Controllers\Controller;
+use App\Http\RestResponse;
 use App\Models\User;
 use Laravel\Socialite\Contracts\Provider;
 use Laravel\Socialite\Facades\Socialite;

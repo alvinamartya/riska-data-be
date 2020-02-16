@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\v1;
 
-use App\Constants\RestResponse;
 use App\Http\Controllers\Controller;
+use App\Http\RestResponse;
 use App\Models\Batch;
 use Illuminate\Http\Request;
 
