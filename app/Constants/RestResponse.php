@@ -2,8 +2,8 @@
 
 namespace App\Constants;
 
-use PhpParser\Node\Scalar\String_;
 use ReflectionClass;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class RestResponse
@@ -16,8 +16,12 @@ class RestResponse
     return response()->json($e, $code);
   }
 
-  static function errorConflict(String $message) {
+  static function conflict(String $message) {
     return response()->json(new ConflictHttpException($message), HttpStatusCode::CONFLICT);
+  }
+
+  static function unauthorized(String $message = "You are not authorized to do this!") {
+    return response()->json(new AccessDeniedHttpException($message), HttpStatusCode::UNAUTHORIZED);
   }
 
   static function data($data, int $code = HttpStatusCode::OK) {

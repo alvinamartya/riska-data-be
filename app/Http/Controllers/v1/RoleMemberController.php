@@ -20,7 +20,7 @@ class RoleMemberController extends Controller
   {
     $user = User::whereEmail($request->email)->firstOrFail();
     if ($role->users->contains($user->id)) {
-      return RestResponse::errorConflict("User already attached to the role");
+      return RestResponse::conflict("User already attached to the role");
     }
     $role->users()->attach($user->id, ['is_active' => true, 'expired_at' => null]);
     return RestResponse::attached(Role::class, User::class);
