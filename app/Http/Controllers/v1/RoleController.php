@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
-use App\Constants\HttpStatusCode;
+use App\Constants\RestResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -12,12 +12,12 @@ class RoleController extends Controller
 
   public function index()
   {
-    return response()->json(Role::withCount('users')->paginate(), HttpStatusCode::OK);
+    return RestResponse::data(Role::withCount('users')->paginate());
   }
 
   public function show(Role $role)
   {
-    return response()->json($role, HttpStatusCode::OK);
+    return RestResponse::data($role);
   }
 
   public function store(Request $request)
@@ -26,7 +26,7 @@ class RoleController extends Controller
     $role->name = $request->name;
     $role->description = $request->description;
     $role->save();
-    return response()->json(["message" => "Role successfully created"], HttpStatusCode::CREATED);
+    return RestResponse::created(Role::class);
   }
 
   public function update(Request $request, Role $role)
@@ -34,12 +34,13 @@ class RoleController extends Controller
     $role->name = $request->name;
     $role->description = $request->description;
     $role->save();
-    return response()->json(["message" => "Role successfully updated"], HttpStatusCode::OK);
+    return RestResponse::updated(Role::class);
   }
 
   public function destroy(Role $role)
   {
     $role->delete();
-    return response()->json(["message" => "Role successfully deleted"], HttpStatusCode::OK);
+    return RestResponse::deleted(Role::class);
+
   }
 }

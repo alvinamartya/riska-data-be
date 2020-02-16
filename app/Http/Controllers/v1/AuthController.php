@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Constants\HttpStatusCode;
+use App\Constants\RestResponse;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Laravel\Socialite\Contracts\Provider;
@@ -44,7 +46,7 @@ class AuthController extends Controller
     try {
       $login = $this->socialite->user();
     } catch (\Exception $e) {
-      return response()->json($e, 400);
+      return RestResponse::error($e, HttpStatusCode::BAD_REQUEST);
     }
 
     $user = User::whereEmail($login->getEmail())->first();
@@ -75,7 +77,7 @@ class AuthController extends Controller
     foreach ($roles as $role) {
       $permissions = array_merge($permissions, $role->permissions->pluck('name')->all());
     }
-    return response()->json(['profile' => $user, 'roles' => $roles->pluck('name')->all(), 'permissions' => $permissions]);
+    return RestResponse::data(['profile' => $user, 'roles' => $roles->pluck('name')->all(), 'permissions' => $permissions]);
   }
 
   /**
@@ -86,7 +88,8 @@ class AuthController extends Controller
   public function logout()
   {
     auth()->logout();
-    return response()->json(['message' => 'Successfully logged out']);
+    return RestResponse::message('Successfully logged out');
+
   }
 
   /**
@@ -108,10 +111,11 @@ class AuthController extends Controller
    */
   protected function respondWithToken($token)
   {
-    return response()->json([
+    $response = [
       'access_token' => $token,
       'token_type' => 'bearer',
       'expires_in' => auth()->factory()->getTTL() * 60
-    ]);
+    ];
+    return RestResponse::data($response);
   }
 }
