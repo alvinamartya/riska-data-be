@@ -14,9 +14,9 @@ class SeedGeolocationTable extends Migration
      */
     public function up()
     {
-      Artisan::call('db:seed', ['--class' => ProvinceSeeder::class]);
-      Artisan::call('db:seed', ['--class' => RegencySeeder::class]);
-      Artisan::call('db:seed', ['--class' => DistrictSeeder::class]);
+      Artisan::call('db:seed', ['--class' => ProvinceSeeder::class, '--force' => true]);
+      Artisan::call('db:seed', ['--class' => RegencySeeder::class, '--force' => true]);
+      Artisan::call('db:seed', ['--class' => DistrictSeeder::class, '--force' => true]);
     }
 
     /**
