@@ -7231,8 +7231,12 @@ class DistrictSeeder extends Seeder
     ];
     $n = count($districts);
     $this->command->info('Generating Data... Please Wait!');
+    $bar = $this->command->getOutput()->createProgressBar($n);
+    $bar->start();
     foreach ($districts as $item) {
       District::create($item);
+      $bar->advance();
     }
+    $bar->finish();
   }
 }
