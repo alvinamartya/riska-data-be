@@ -7230,12 +7230,9 @@ class DistrictSeeder extends Seeder
       ['id' => '9471040', 'regency_id' => '9471', 'name' => 'JAYAPURA UTARA']
     ];
     $n = count($districts);
-    $continue = $this->command->ask('This will generate ' . $n . ' Districts and maybe take several minutes to complete. Wanna continue? [y/n]', 'y');
-    if ($continue == 'y') {
-      $this->command->info('Generating Data... Please Wait!');
-      foreach ($districts as $item) {
-        District::create($item);
-      }
+    $this->command->info('Generating Data... Please Wait!');
+    foreach ($districts as $item) {
+      District::create($item);
     }
   }
 }
