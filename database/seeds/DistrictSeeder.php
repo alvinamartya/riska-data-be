@@ -7238,5 +7238,6 @@ class DistrictSeeder extends Seeder
       $bar->advance();
     }
     $bar->finish();
+    $this->command->line(" ");
   }
 }

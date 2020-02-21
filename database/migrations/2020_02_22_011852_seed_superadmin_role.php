@@ -22,9 +22,10 @@ class SeedSuperadminRole extends Migration
      * Reverse the migrations.
      *
      * @return void
+     * @throws Exception
      */
     public function down()
     {
-        Role::truncate();
+        Role::whereId(1)->delete();
     }
 }
