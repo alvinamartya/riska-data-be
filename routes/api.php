@@ -11,9 +11,11 @@
 |
 */
 
+use App\Http\RestResponse;
+
 Route::get('/', function (){
-  abort(404);
-});
+  return RestResponse::message("Hi.");
+})->name('default');
 
 Route::group(['prefix' => 'v1', 'namespace' => 'v1'], function () {
 

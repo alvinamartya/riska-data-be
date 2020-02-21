@@ -52,25 +52,20 @@ class Handler extends ExceptionHandler
 
   public function render($request, Exception $exception)
   {
-    // This will replace all api exception with
-    // a JSON response.
-    if (substr($request->getPathInfo(), 0, 5) == "/api/" || ($request->route() != null && in_array("api", $request->route()->middleware()))) {
-      $status_code = 500;
-      $msg = $exception->getMessage();
-      if ($exception instanceof ModelNotFoundException) {
-        $status_code = 404;
-        $model = explode("\\", $exception->getModel());
-        $msg = sprintf("%s not found [%s]", end($model), join(", ", $exception->getIds()));
-      }
-      else if ($exception instanceof ConflictHttpException) $status_code = 409;
-      else if ($exception instanceof AuthenticationException) $status_code = 401;
-      else if ($exception instanceof NotFoundHttpException) {
-        $status_code = 404;
-        $msg = "API not found";
-      }
-      return response()->json(['error' => $msg], $status_code);
+    // This will replace all exception with a JSON response.
+    $status_code = 500;
+    $msg = $exception->getMessage();
+    if ($exception instanceof ModelNotFoundException) {
+      $status_code = 404;
+      $model = explode("\\", $exception->getModel());
+      $msg = sprintf("%s not found [%s]", end($model), join(", ", $exception->getIds()));
     }
-
-    return parent::render($request, $exception);
+    else if ($exception instanceof ConflictHttpException) $status_code = 409;
+    else if ($exception instanceof AuthenticationException) $status_code = 401;
+    else if ($exception instanceof NotFoundHttpException) {
+      $status_code = 404;
+      $msg = "API not found";
+    }
+    return response()->json(['error' => $msg], $status_code);
   }
 }
