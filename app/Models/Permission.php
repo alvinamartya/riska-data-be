@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\PermissionCreated;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -23,6 +24,10 @@ use Illuminate\Database\Eloquent\Model;
 class Permission extends Model
 {
   public $timestamps = false;
+
+  protected $dispatchesEvents = [
+    'created' => PermissionCreated::class,
+  ];
 
   public function roles()
   {
