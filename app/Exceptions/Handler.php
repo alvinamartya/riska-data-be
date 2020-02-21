@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Http\RestResponse;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -66,6 +67,6 @@ class Handler extends ExceptionHandler
       $status_code = 404;
       $msg = "API not found";
     }
-    return response()->json(['error' => $msg], $status_code);
+    return RestResponse::error($msg, $status_code);
   }
 }
