@@ -1,7 +1,7 @@
 {
-  "name": "farizhermawan/riska-data-fe",
+  "name": "farizhermawan/riska-data-be",
   "type": "project",
-  "description": "riska-data-fe",
+  "description": "riska-data-be",
   "keywords": [
     "laravel"
   ],

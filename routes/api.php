@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/', function (){
+  abort(404);
+});
+
 Route::group(['prefix' => 'v1', 'namespace' => 'v1'], function () {
 
   Route::get('auth/login', 'AuthController@login')->name('auth.login');
@@ -27,5 +31,6 @@ Route::group(['prefix' => 'v1', 'namespace' => 'v1'], function () {
     Route::resource('roles.users', 'RoleMemberController')->except(['create', 'edit', 'show']);
     Route::resource('batches', 'BatchController')->except(['create', 'edit']);
     Route::resource('departments', 'DepartmentController')->except(['create', 'edit']);
+    Route::resource('users.events', 'UserEventController')->except(['create', 'edit', 'show']);
   });
 });
