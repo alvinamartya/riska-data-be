@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 /**
  * App\Models\UserEvent
  *
@@ -58,8 +59,14 @@ class UserEvent extends Model
     'deleted_by',
   ];
 
+  protected $casts = [
+    'is_internal' => 'boolean'
+  ];
+
   public function user()
   {
     return $this->belongsTo(User::class);
   }
+
+
 }
