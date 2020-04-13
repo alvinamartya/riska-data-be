@@ -25,7 +25,9 @@ jobs:
     - name: Generate key
       run: php artisan key:generate
     - name: Create Database
-      run: mysql -uroot -h127.0.0.1 -proot -e 'CREATE DATABASE IF NOT EXISTS laravel;'
+      run: |
+        sudo systemctl start mysql
+        mysql -uroot -h127.0.0.1 -proot -e 'CREATE DATABASE IF NOT EXISTS laravel;'
     - name: Test database migration and rollback
       id: migration
       env:
