@@ -11,19 +11,19 @@ class RestResponse
     return response()->json($data, $code);
   }
 
-  static function message(String $message, int $code = HttpStatusCode::OK) {
+  static function message(string $message, int $code = HttpStatusCode::OK) {
     return self::data(["message" => $message], $code);
   }
 
-  static function error(String $message, int $code = HttpStatusCode::SERVER_ERROR) {
+  static function error(string $message, int $code = HttpStatusCode::SERVER_ERROR) {
     return self::data(["error" => $message], $code);
   }
 
-  static function conflict(String $message) {
+  static function conflict(string $message) {
     return self::error($message, HttpStatusCode::CONFLICT);
   }
 
-  static function unauthorized(String $message = "You are not authorized to do this!") {
+  static function unauthorized(string $message = "You are not authorized to do this!") {
     return self::error($message, HttpStatusCode::UNAUTHORIZED);
   }
 
