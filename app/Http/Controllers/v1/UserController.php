@@ -14,8 +14,7 @@ class UserController extends Controller
     $email = $request->query('email');
     if ($email) {
       $response = User::where('email', 'like', $email . '%')->paginate();
-    }
-    else {
+    } else {
       $response = User::paginate();
     }
     return RestResponse::data($response);

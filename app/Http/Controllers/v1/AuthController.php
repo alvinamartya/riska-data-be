@@ -6,8 +6,11 @@ use App\Constants\HttpStatusCode;
 use App\Http\Controllers\Controller;
 use App\Http\RestResponse;
 use App\Models\User;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Laravel\Socialite\Contracts\Provider;
 use Laravel\Socialite\Facades\Socialite;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AuthController extends Controller
 {
@@ -28,7 +31,7 @@ class AuthController extends Controller
   /**
    * Redirect the user to the provider authentication page.
    *
-   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   * @return RedirectResponse
    */
   public function login()
   {
@@ -38,14 +41,14 @@ class AuthController extends Controller
   /**
    * Obtain the user information from provider.
    *
-   * @return \Illuminate\Http\JsonResponse
+   * @return JsonResponse
    */
   public function callback()
   {
     /** @var User $user */
     try {
       $login = $this->socialite->user();
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
       return RestResponse::error($e, HttpStatusCode::BAD_REQUEST);
     }
 
@@ -64,9 +67,26 @@ class AuthController extends Controller
   }
 
   /**
+   * Get the token array structure.
+   *
+   * @param string $token
+   *
+   * @return JsonResponse
+   */
+  protected function respondWithToken($token)
+  {
+    $response = [
+      'access_token' => $token,
+      'token_type' => 'bearer',
+      'expires_in' => auth()->factory()->getTTL() * 60
+    ];
+    return RestResponse::data($response);
+  }
+
+  /**
    * Get the authenticated User.
    *
-   * @return \Illuminate\Http\JsonResponse
+   * @return JsonResponse
    */
   public function me()
   {
@@ -83,7 +103,7 @@ class AuthController extends Controller
   /**
    * Log the user out (Invalidate the token).
    *
-   * @return \Illuminate\Http\JsonResponse
+   * @return JsonResponse
    */
   public function logout()
   {
@@ -95,27 +115,10 @@ class AuthController extends Controller
   /**
    * Refresh a token.
    *
-   * @return \Illuminate\Http\JsonResponse
+   * @return JsonResponse
    */
   public function refresh()
   {
     return $this->respondWithToken(auth()->refresh());
-  }
-
-  /**
-   * Get the token array structure.
-   *
-   * @param string $token
-   *
-   * @return \Illuminate\Http\JsonResponse
-   */
-  protected function respondWithToken($token)
-  {
-    $response = [
-      'access_token' => $token,
-      'token_type' => 'bearer',
-      'expires_in' => auth()->factory()->getTTL() * 60
-    ];
-    return RestResponse::data($response);
   }
 }
