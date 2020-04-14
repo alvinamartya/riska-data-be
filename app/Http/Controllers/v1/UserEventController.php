@@ -12,16 +12,14 @@ class UserEventController extends Controller
 {
   public function index(User $user)
   {
-    return RestResponse::data($user->events);
+    return RestResponse::data($user->events()->paginate());
   }
 
   public function show(User $user, UserEvent $event)
   {
-
     if ($event->user_id != $user->id) {
       return RestResponse::unauthorized();
     }
-
     return RestResponse::data($event);
   }
 
@@ -43,7 +41,6 @@ class UserEventController extends Controller
     if ($event->user_id != $user->id) {
       return RestResponse::unauthorized();
     }
-
     $event->year = $request->year;
     $event->name = $request->name;
     $event->role = $request->role;
@@ -59,7 +56,6 @@ class UserEventController extends Controller
     if ($event->user_id != $user->id) {
       return RestResponse::unauthorized();
     }
-
     $event->delete();
     return RestResponse::deleted(UserEvent::class);
   }

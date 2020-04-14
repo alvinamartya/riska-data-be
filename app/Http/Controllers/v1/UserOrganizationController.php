@@ -13,7 +13,7 @@ class UserOrganizationController extends Controller
 
   public function index(User $user)
   {
-    return RestResponse::data($user->organizations);
+    return RestResponse::data($user->organizations()->paginate());
   }
 
 
@@ -29,13 +29,11 @@ class UserOrganizationController extends Controller
     return RestResponse::created(UserOrganization::class);
   }
 
-
   public function show(User $user, UserOrganization $organization)
   {
     if ($user->id != $organization->user_id) {
       return RestResponse::unauthorized();
     }
-
     return RestResponse::data($organization);
   }
 
@@ -59,7 +57,6 @@ class UserOrganizationController extends Controller
     if ($user->id != $organization->user_id) {
       return RestResponse::unauthorized();
     }
-
     $organization->delete();
     return RestResponse::deleted(UserOrganization::class);
   }
