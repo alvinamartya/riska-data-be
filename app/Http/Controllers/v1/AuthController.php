@@ -53,15 +53,13 @@ class AuthController extends Controller
     }
 
     $user = User::whereEmail($login->getEmail())->first();
-    if (!$user) {
-      $user = new User;
-      $user->fullname = $login->getName();
-      $user->photo = $login->getAvatar();
-      $user->provider_name = "google";
-      $user->provider_id = $login->getId();
-      $user->email = $login->getEmail();
-      $user->save();
-    }
+    if (!$user) $user = new User;
+    if (empty($user->fullname)) $user->fullname = $login->getName();
+    if (empty($user->photo)) $user->photo = $login->getAvatar();
+    if (empty($user->provider_name)) $user->provider_name = "google";
+    if (empty($user->provider_id)) $user->provider_id = $login->getId();
+    if (empty($user->email)) $user->email = $login->getEmail();
+    $user->save();
 
     return $this->respondWithToken(auth()->login($user));
   }
