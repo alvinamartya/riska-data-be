@@ -152,16 +152,19 @@ class User extends Authenticatable implements JWTSubject
 
   public function getDistrictNameAttribute()
   {
+    if (empty($this->district_id)) return null;
     return District::whereId($this->district_id)->first()->name;
   }
 
   public function getRegencyNameAttribute()
   {
+    if (empty($this->district_id)) return null;
     return Regency::whereId(substr($this->district_id, 0, 4))->first()->name;
   }
 
   public function getProvinceNameAttribute()
   {
+    if (empty($this->district_id)) return null;
     return Province::whereId(substr($this->district_id, 0, 2))->first()->name;
   }
 
