@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\Gender;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -97,6 +98,15 @@ class User extends Authenticatable implements JWTSubject
     'deleted_by',
   ];
 
+  protected $appends = [
+    'whatsapp_link',
+    'has_phone',
+    'has_whatsapp',
+    'district_name',
+    'regency_name',
+    'province_name',
+  ];
+
   /**
    * Get the identifier that will be stored in the subject claim of the JWT.
    *
@@ -115,6 +125,44 @@ class User extends Authenticatable implements JWTSubject
   public function getJWTCustomClaims()
   {
     return [];
+  }
+
+  public function getGenderAttribute($value)
+  {
+    return $value == 0 ? Gender::FEMALE : Gender::MALE;
+  }
+
+  public function getHasPhoneAttribute()
+  {
+    return !empty($this->phone_number);
+  }
+
+  public function getHasWhatsappAttribute()
+  {
+    return !empty($this->whatsapp_number);
+  }
+
+  public function getWhatsappLinkAttribute()
+  {
+    if (empty($this->whatsapp_number)) return "";
+    $phone = str_replace(["+", "-", " "], "", $this->whatsapp_number);
+    if (substr($phone, 0, 1) == "0") $phone = "62" . substr($phone, 1);
+    return "https://wa.me/{$phone}";
+  }
+
+  public function getDistrictNameAttribute()
+  {
+    return District::whereId($this->district_id)->first()->name;
+  }
+
+  public function getRegencyNameAttribute()
+  {
+    return Regency::whereId(substr($this->district_id, 0, 4))->first()->name;
+  }
+
+  public function getProvinceNameAttribute()
+  {
+    return Province::whereId(substr($this->district_id, 0, 2))->first()->name;
   }
 
   public function roles()
