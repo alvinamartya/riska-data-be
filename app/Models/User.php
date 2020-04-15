@@ -129,6 +129,7 @@ class User extends Authenticatable implements JWTSubject
 
   public function getGenderAttribute($value)
   {
+    if ($value == null) return "-";
     return $value == 0 ? Gender::FEMALE : Gender::MALE;
   }
 
