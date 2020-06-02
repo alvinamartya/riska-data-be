@@ -20,7 +20,7 @@ class WhatsappOutboxController extends Controller
     if ($request->get('status') != null) {
       $outboxes = $outboxes->where('status', '=', $request->get('status'));
     }
-    return RestResponse::data($outboxes->paginate());
+    return RestResponse::data($outboxes->orderBy('created_at', 'desc')->paginate());
   }
 
   public function store(Request $request, WhatsappBot $whatsapp_bot)

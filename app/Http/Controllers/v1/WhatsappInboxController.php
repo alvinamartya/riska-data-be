@@ -15,7 +15,7 @@ class WhatsappInboxController extends Controller
 
   public function index(WhatsappBot $whatsapp_bot)
   {
-    return RestResponse::data($whatsapp_bot->inboxes()->paginate());
+    return RestResponse::data($whatsapp_bot->inboxes()->orderBy('created_at', 'desc')->paginate());
   }
 
   public function store(Request $request, WhatsappBot $whatsapp_bot)
