@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\UserProgram
@@ -17,34 +21,34 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $created_by
  * @property string|null $updated_by
  * @property string|null $deleted_by
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @method static bool|null forceDelete()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\UserProgram onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram query()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram newQuery()
+ * @method static Builder|UserProgram onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram query()
  * @method static bool|null restore()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram whereAdditionalData($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram whereIsGraduated($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram whereProgramId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram whereRegistrationStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram whereUpdatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserProgram whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\UserProgram withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\UserProgram withoutTrashed()
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Invoice[] $invoices
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram whereAdditionalData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram whereIsGraduated($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram whereProgramId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram whereRegistrationStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserProgram whereUserId($value)
+ * @method static Builder|UserProgram withTrashed()
+ * @method static Builder|UserProgram withoutTrashed()
+ * @mixin Eloquent
+ * @property-read Collection|Invoice[] $invoices
  * @property-read int|null $invoices_count
- * @property-read \App\Models\Program $program
- * @property-read \App\Models\User $user
+ * @property-read Program $program
+ * @property-read User $user
  */
 class UserProgram extends Model
 {

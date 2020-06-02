@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Program
@@ -22,38 +26,38 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $created_by
  * @property string|null $updated_by
  * @property string|null $deleted_by
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @method static bool|null forceDelete()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Program onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Program newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Program newQuery()
+ * @method static Builder|Program onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Program query()
  * @method static bool|null restore()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereBatchId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereContactPerson($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereDepartmentId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereFee($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereFemaleQuote($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereIsActive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereMaleQuote($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereTotalQuota($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Program whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Program withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Program withoutTrashed()
- * @mixin \Eloquent
- * @property-read \App\Models\Batch $batch
- * @property-read \App\Models\Department $department
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\UserProgram[] $participants
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereBatchId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereContactPerson($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereDepartmentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereFee($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereFemaleQuote($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereMaleQuote($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereTotalQuota($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Program whereUpdatedBy($value)
+ * @method static Builder|Program withTrashed()
+ * @method static Builder|Program withoutTrashed()
+ * @mixin Eloquent
+ * @property-read Batch $batch
+ * @property-read Department $department
+ * @property-read Collection|UserProgram[] $participants
  * @property-read int|null $participants_count
  */
 class Program extends Model

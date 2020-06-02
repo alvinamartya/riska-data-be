@@ -26,7 +26,6 @@ Route::group(['prefix' => 'v1', 'namespace' => 'v1'], function () {
   Route::get('auth/logout', 'AuthController@logout')->name('auth.logout');
   Route::get('auth/refresh', 'AuthController@refresh')->name('auth.refresh');
   Route::get('auth/me', 'AuthController@me')->name('auth.me');
-  
 
   Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('users', 'UserController')->except(['create', 'edit', 'store', 'destroy', 'update']);
@@ -40,4 +39,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'v1'], function () {
     Route::resource('users.events', 'UserEventController')->except(['create','edit']);
     Route::resource('users.organizations', 'UserOrganizationController')->except(['create','edit']);
   });
+
+  Route::resource('whatsapp-bots', 'WhatsappBotController')->except(['create','edit']);
+  Route::resource('whatsapp-bots.inboxes', 'WhatsappInboxController')->except(['create','edit']);
+  Route::resource('whatsapp-bots.outboxes', 'WhatsappOutboxController')->except(['create','edit']);
 });

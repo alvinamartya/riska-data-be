@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Batch
@@ -13,32 +17,32 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $created_by
  * @property string|null $updated_by
  * @property string|null $deleted_by
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @method static bool|null forceDelete()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Batch onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch query()
+ * @method static Builder|Batch newModelQuery()
+ * @method static Builder|Batch newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Batch onlyTrashed()
+ * @method static Builder|Batch query()
  * @method static bool|null restore()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Batch withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Batch withoutTrashed()
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Program[] $programs
+ * @method static Builder|Batch whereCreatedAt($value)
+ * @method static Builder|Batch whereCreatedBy($value)
+ * @method static Builder|Batch whereDeletedAt($value)
+ * @method static Builder|Batch whereDeletedBy($value)
+ * @method static Builder|Batch whereId($value)
+ * @method static Builder|Batch whereName($value)
+ * @method static Builder|Batch whereUpdatedAt($value)
+ * @method static Builder|Batch whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|Batch withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Batch withoutTrashed()
+ * @mixin Eloquent
+ * @property-read Collection|Program[] $programs
  * @property-read int|null $programs_count
  * @property string $start_date
  * @property string $end_date
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch whereEndDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Batch whereStartDate($value)
+ * @method static Builder|Batch whereEndDate($value)
+ * @method static Builder|Batch whereStartDate($value)
  */
 class Batch extends Model
 {

@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Training
@@ -14,28 +18,28 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $created_by
  * @property string|null $updated_by
  * @property string|null $deleted_by
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @method static bool|null forceDelete()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Training newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Training newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Training onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Training query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Training newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Training newQuery()
+ * @method static Builder|Training onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Training query()
  * @method static bool|null restore()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Training whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Training whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Training whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Training whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Training whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Training whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Training whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Training whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Training whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Training withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Training withoutTrashed()
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $participants
+ * @method static \Illuminate\Database\Eloquent\Builder|Training whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Training whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Training whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Training whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Training whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Training whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Training whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Training whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Training whereUpdatedBy($value)
+ * @method static Builder|Training withTrashed()
+ * @method static Builder|Training withoutTrashed()
+ * @mixin Eloquent
+ * @property-read Collection|User[] $participants
  * @property-read int|null $participants_count
  */
 class Training extends Model

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -10,14 +12,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $regency_id
  * @property string $name
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\District newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\District newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\District query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\District whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\District whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\District whereRegencyId($value)
- * @mixin \Eloquent
- * @property-read \App\Models\Regency $regency
+ * @method static Builder|District newModelQuery()
+ * @method static Builder|District newQuery()
+ * @method static Builder|District query()
+ * @method static Builder|District whereId($value)
+ * @method static Builder|District whereName($value)
+ * @method static Builder|District whereRegencyId($value)
+ * @mixin Eloquent
+ * @property-read Regency $regency
  */
 class District extends Model
 {

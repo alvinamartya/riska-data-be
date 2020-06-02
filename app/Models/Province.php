@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -9,13 +12,13 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Province newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Province newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Province query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Province whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Province whereName($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Regency[] $regencies
+ * @method static Builder|Province newModelQuery()
+ * @method static Builder|Province newQuery()
+ * @method static Builder|Province query()
+ * @method static Builder|Province whereId($value)
+ * @method static Builder|Province whereName($value)
+ * @mixin Eloquent
+ * @property-read Collection|Regency[] $regencies
  * @property-read int|null $regencies_count
  */
 class Province extends Model

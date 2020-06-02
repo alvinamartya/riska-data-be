@@ -3,9 +3,15 @@
 namespace App\Models;
 
 use App\Constants\Gender;
+use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
@@ -32,56 +38,62 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string|null $created_by
  * @property string|null $updated_by
  * @property string|null $deleted_by
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property string|null $district_id
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
+ * @property-read Collection|Role[] $roles
  * @property-read int|null $roles_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereBirthDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereBirthPlace($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDistrictId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEducationGrade($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEducationSubject($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereFieldOfWork($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereFullname($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereGender($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereNickname($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePhoneNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePhoto($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereProviderId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereProviderName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereSocialMedia($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereWhatsappNumber($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\UserEvent[] $events
+ * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereBirthDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereBirthPlace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDistrictId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEducationGrade($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEducationSubject($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereFieldOfWork($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereFullname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGender($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereNickname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoneNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoto($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereProviderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereProviderName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereSocialMedia($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereWhatsappNumber($value)
+ * @mixin Eloquent
+ * @property-read Collection|UserEvent[] $events
  * @property-read int|null $events_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\UserOrganization[] $organizations
+ * @property-read Collection|UserOrganization[] $organizations
  * @property-read int|null $organizations_count
  * @method static bool|null forceDelete()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\User onlyTrashed()
+ * @method static Builder|User onlyTrashed()
  * @method static bool|null restore()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\User withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\User withoutTrashed()
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Training[] $trainings
+ * @method static Builder|User withTrashed()
+ * @method static Builder|User withoutTrashed()
+ * @property-read Collection|Training[] $trainings
  * @property-read int|null $trainings_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\UserProgram[] $programs
+ * @property-read Collection|UserProgram[] $programs
  * @property-read int|null $programs_count
+ * @property-read mixed $district_name
+ * @property-read mixed $has_phone
+ * @property-read mixed $has_whatsapp
+ * @property-read mixed $province_name
+ * @property-read mixed $regency_name
+ * @property-read mixed $whatsapp_link
  */
 class User extends Authenticatable implements JWTSubject
 {

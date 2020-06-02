@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Invoice
@@ -16,32 +20,32 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $created_by
  * @property string|null $updated_by
  * @property string|null $deleted_by
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @method static bool|null forceDelete()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Invoice onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice newQuery()
+ * @method static Builder|Invoice onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice query()
  * @method static bool|null restore()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereAmount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereInvoiceDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereUpdatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereUserProgramId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Invoice withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Invoice withoutTrashed()
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Payment[] $payments
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereInvoiceDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereUserProgramId($value)
+ * @method static Builder|Invoice withTrashed()
+ * @method static Builder|Invoice withoutTrashed()
+ * @mixin Eloquent
+ * @property-read Collection|Payment[] $payments
  * @property-read int|null $payments_count
- * @property-read \App\Models\UserProgram $userProgram
+ * @property-read UserProgram $userProgram
  */
 class Invoice extends Model
 {

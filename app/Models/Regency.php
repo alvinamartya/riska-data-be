@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -10,16 +13,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $province_id
  * @property string $name
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Regency newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Regency newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Regency query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Regency whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Regency whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Regency whereProvinceId($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\District[] $districts
+ * @method static Builder|Regency newModelQuery()
+ * @method static Builder|Regency newQuery()
+ * @method static Builder|Regency query()
+ * @method static Builder|Regency whereId($value)
+ * @method static Builder|Regency whereName($value)
+ * @method static Builder|Regency whereProvinceId($value)
+ * @mixin Eloquent
+ * @property-read Collection|District[] $districts
  * @property-read int|null $districts_count
- * @property-read \App\Models\Province $province
+ * @property-read Province $province
  */
 class Regency extends Model
 {

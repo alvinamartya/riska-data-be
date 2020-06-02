@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Payment
@@ -21,36 +24,36 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $created_by
  * @property string|null $updated_by
  * @property string|null $deleted_by
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @method static bool|null forceDelete()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Payment onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment newQuery()
+ * @method static Builder|Payment onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment query()
  * @method static bool|null restore()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment whereAmount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment whereApprovalDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment whereApprovalStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment whereApprovalUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment whereInvoiceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment wherePaymentDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment wherePaymentProof($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment wherePaymentType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Payment withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Payment withoutTrashed()
- * @mixin \Eloquent
- * @property-read \App\Models\User $approvedBy
- * @property-read \App\Models\Invoice $invoice
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereApprovalDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereApprovalStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereApprovalUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereInvoiceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment wherePaymentDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment wherePaymentProof($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment wherePaymentType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUpdatedBy($value)
+ * @method static Builder|Payment withTrashed()
+ * @method static Builder|Payment withoutTrashed()
+ * @mixin Eloquent
+ * @property-read User $approvedBy
+ * @property-read Invoice $invoice
  */
 class Payment extends Model
 {
