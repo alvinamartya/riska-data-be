@@ -32,8 +32,8 @@ class WhatsappBotController extends Controller
 
   public function update(Request $request, WhatsappBot $whatsapp_bot)
   {
-    $whatsapp_bot->session = $request->get('session');
-    $whatsapp_bot->name = $request->get('name');
+    if ($request->exists('session')) $whatsapp_bot->session = $request->get('session');
+    if ($request->exists('name')) $whatsapp_bot->name = $request->get('name');
     $whatsapp_bot->save();
     return RestResponse::updated($whatsapp_bot);
   }
