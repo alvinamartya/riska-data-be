@@ -87,7 +87,7 @@ class AuthController extends Controller
       $outbox = new WhatsappOutbox();
       $outbox->owner = config('services.whatsapp.client_id');
       $outbox->to = "{$id}@c.us";
-      $outbox->message = "Ssst, kode ini rahasia ya 🤫!\nJangan kasih tau siapapun, nanti dia bisa masuk ke akun kamu!\n\nKode login kamu *$pin[0] $pin[1] $pin[2] $pin[3] $pin[4] $pin[5]*\nKode tersebut hanya berlaku 30 menit.";
+      $outbox->message = "Ssst, kode ini rahasia ya 🤫\nJangan kasih tau siapapun, nanti dia bisa masuk ke akun kamu!\n\nKode login kamu *$pin[0] $pin[1] $pin[2] $pin[3] $pin[4] $pin[5]*\nKode tersebut hanya berlaku 30 menit.";
       $outbox->option = null;
       $outbox->status = WhatsappOutboxStatus::PENDING;
       $outbox->save();
