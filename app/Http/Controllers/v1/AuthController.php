@@ -86,7 +86,7 @@ class AuthController extends Controller
 
       $outbox = new WhatsappOutbox();
       $outbox->owner = config('services.whatsapp.client_id');
-      $outbox->to = $request->get('id');
+      $outbox->to = "{$id}@c.us";
       $outbox->message = "Kode login kamu *$pin[0] $pin[1] $pin[2] $pin[3] $pin[4] $pin[5]*\nKode tersebut hanya berlaku 30 menit ya.";
       $outbox->option = null;
       $outbox->status = WhatsappOutboxStatus::PENDING;
