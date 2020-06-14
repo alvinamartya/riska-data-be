@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers\v1;
 
-use App\Constants\WhatsappInboxStatus;
-use App\Constants\WhatsappMessageType;
-use App\Constants\WhatsappOutboxStatus;
 use App\Http\Controllers\Controller;
 use App\Http\RestResponse;
 use App\Models\WhatsappBot;
@@ -25,15 +22,15 @@ class WhatsappOutboxController extends Controller
 
   public function store(Request $request, WhatsappBot $whatsapp_bot)
   {
-    $inbox = new WhatsappOutbox();
-    $inbox->owner = $whatsapp_bot->id;
-    $inbox->to = $request->get('to');
-    $inbox->message = $request->get('message');
-    $inbox->option = $request->get('optionx');
-    $inbox->status = $request->get('status');
-    $inbox->save();
+    $outbox = new WhatsappOutbox();
+    $outbox->owner = $whatsapp_bot->id;
+    $outbox->to = $request->get('to');
+    $outbox->message = $request->get('message');
+    $outbox->option = $request->get('option');
+    $outbox->status = $request->get('status');
+    $outbox->save();
 
-    return RestResponse::created($inbox);
+    return RestResponse::created($outbox);
   }
 
   public function show(WhatsappBot $whatsapp_bot, WhatsappOutbox $outbox)

@@ -27,6 +27,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'v1'], function () {
   Route::get('auth/refresh', 'AuthController@refresh')->name('auth.refresh');
   Route::get('auth/me', 'AuthController@me')->name('auth.me');
 
+  Route::post('auth/whatsapp', 'AuthController@loginByWhatsapp')->name('auth.whatsapp');
+
   Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('users', 'UserController')->except(['create', 'edit', 'store', 'destroy', 'update']);
     Route::resource('roles', 'RoleController')->except(['create', 'edit']);

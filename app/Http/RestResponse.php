@@ -19,6 +19,10 @@ class RestResponse
     return self::data(["error" => $message], $code);
   }
 
+  static function badRequest(string $message) {
+    return self::data(["error" => $message], HttpStatusCode::BAD_REQUEST);
+  }
+
   static function conflict(string $message) {
     return self::error($message, HttpStatusCode::CONFLICT);
   }

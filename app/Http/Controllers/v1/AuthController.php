@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\v1;
 
 use App\Constants\HttpStatusCode;
+use App\Constants\WhatsappOutboxStatus;
 use App\Http\Controllers\Controller;
 use App\Http\RestResponse;
+use App\Models\ConfirmationCode;
 use App\Models\User;
+use App\Models\WhatsappOutbox;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Laravel\Socialite\Contracts\Provider;
 use Laravel\Socialite\Facades\Socialite;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -24,7 +28,7 @@ class AuthController extends Controller
    */
   public function __construct()
   {
-    $this->middleware('auth:api', ['except' => ['login', 'callback']]);
+    $this->middleware('auth:api', ['except' => ['login', 'loginByWhatsapp', 'callback']]);
     $this->socialite = Socialite::driver("google")->stateless();
   }
 
@@ -61,6 +65,46 @@ class AuthController extends Controller
     if (empty($user->email)) $user->email = $login->getEmail();
     $user->save();
 
+    return $this->respondWithToken(auth()->login($user));
+  }
+
+  /**
+   * Redirect the user to the provider authentication page.
+   *
+   * @return JsonResponse
+   */
+  public function loginByWhatsapp(Request $request)
+  {
+    $id = $request->get('id');
+    $code = $request->get('code');
+    $action = implode(".", ["login", $id]);
+
+    if (!$id) return RestResponse::badRequest('Missing required parameters.');
+
+    if (!$code) {
+      $pin = ConfirmationCode::createCode($action);
+
+      $outbox = new WhatsappOutbox();
+      $outbox->owner = config('services.whatsapp.client_id');
+      $outbox->to = $request->get('id');
+      $outbox->message = "Kode login kamu *$pin[0] $pin[1] $pin[2] $pin[3] $pin[4] $pin[5]*\nKode tersebut hanya berlaku 30 menit ya.";
+      $outbox->option = null;
+      $outbox->status = WhatsappOutboxStatus::PENDING;
+      $outbox->save();
+
+      return RestResponse::data(["message" => "confirmation code has been sent"]);
+    }
+
+    $user = User::whereWhatsappNumber($id)->first();
+    if (!$user) $user = new User;
+    if (empty($user->provider_name)) $user->provider_name = "whatsapp";
+    if (empty($user->provider_id)) $user->provider_id = "{$id}@c.us";
+    if (empty($user->whatsapp_number)) $user->whatsapp_number = $id;
+
+    if (!ConfirmationCode::isCodeMatch($action, $code)) return RestResponse::badRequest("confirmation code is not match.");
+    ConfirmationCode::remove($action);
+
+    $user->save();
     return $this->respondWithToken(auth()->login($user));
   }
 
