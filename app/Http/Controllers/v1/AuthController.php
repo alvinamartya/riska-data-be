@@ -69,6 +69,23 @@ class AuthController extends Controller
   }
 
   /**
+   * Get the token array structure.
+   *
+   * @param string $token
+   *
+   * @return JsonResponse
+   */
+  protected function respondWithToken($token)
+  {
+    $response = [
+      'access_token' => $token,
+      'token_type' => 'bearer',
+      'expires_in' => auth()->factory()->getTTL() * 60
+    ];
+    return RestResponse::data($response);
+  }
+
+  /**
    * Redirect the user to the provider authentication page.
    *
    * @return JsonResponse
@@ -106,23 +123,6 @@ class AuthController extends Controller
 
     $user->save();
     return $this->respondWithToken(auth()->login($user));
-  }
-
-  /**
-   * Get the token array structure.
-   *
-   * @param string $token
-   *
-   * @return JsonResponse
-   */
-  protected function respondWithToken($token)
-  {
-    $response = [
-      'access_token' => $token,
-      'token_type' => 'bearer',
-      'expires_in' => auth()->factory()->getTTL() * 60
-    ];
-    return RestResponse::data($response);
   }
 
   /**
