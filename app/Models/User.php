@@ -158,9 +158,7 @@ class User extends Authenticatable implements JWTSubject
   public function getWhatsappLinkAttribute()
   {
     if (empty($this->whatsapp_number)) return "";
-    $phone = str_replace(["+", "-", " "], "", $this->whatsapp_number);
-    if (substr($phone, 0, 1) == "0") $phone = "62" . substr($phone, 1);
-    return "https://wa.me/{$phone}";
+    return "https://wa.me/{$this->whatsapp_number}";
   }
 
   public function getDistrictNameAttribute()

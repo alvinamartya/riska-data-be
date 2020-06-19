@@ -24,4 +24,17 @@ class UserController extends Controller
   {
     return RestResponse::data($user);
   }
+
+  public function update(Request $request, User $user)
+  {
+    $user->whatsapp_number = $this->sanitizeWhatsapp($request->get("whatsapp_number"));
+    $user->save();
+    return RestResponse::updated(User::class);
+  }
+
+  private function sanitizeWhatsapp($phoneNumber) {
+    $phoneNumber = str_replace(["+", "-", " "], "", $phoneNumber);
+    if (substr($phoneNumber, 0, 1) == "0") $phoneNumber = "62" . substr($phoneNumber, 1);
+    return $phoneNumber;
+  }
 }

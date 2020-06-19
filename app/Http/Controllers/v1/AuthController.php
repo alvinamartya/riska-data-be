@@ -9,6 +9,7 @@ use App\Http\RestResponse;
 use App\Models\ConfirmationCode;
 use App\Models\User;
 use App\Models\WhatsappOutbox;
+use DB;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -94,12 +95,18 @@ class AuthController extends Controller
   {
     $id = $request->get('id');
     $code = $request->get('code');
-    $action = implode(".", ["login", $id]);
+    $action = $request->get('action');
 
-    if (!$id) return RestResponse::badRequest('Missing required parameters.');
+    if (!$id || !$action) return RestResponse::badRequest('missing required parameters.');
+
+    $key = implode(".", [$action, $id]);
+    $user = User::whereWhatsappNumber($id)->first();
+
+    if ($action == "login" && !$user) return RestResponse::badRequest('user not registered.');
+    if ($action == "signup" && $user) return RestResponse::badRequest('user already registered.');
 
     if (!$code) {
-      $pin = ConfirmationCode::createCode($action);
+      $pin = ConfirmationCode::createCode($key);
 
       $outbox = new WhatsappOutbox();
       $outbox->owner = config('services.whatsapp.client_id');
@@ -112,16 +119,30 @@ class AuthController extends Controller
       return RestResponse::data(["message" => "confirmation code has been sent"]);
     }
 
-    $user = User::whereWhatsappNumber($id)->first();
-    if (!$user) $user = new User;
-    if (empty($user->provider_name)) $user->provider_name = "whatsapp";
-    if (empty($user->provider_id)) $user->provider_id = "{$id}@c.us";
-    if (empty($user->whatsapp_number)) $user->whatsapp_number = $id;
+    DB::beginTransaction();
+    try {
+      if ($action == "signup") {
+        $user = new User;
+        $user->fullname = $request->get("fullname");
+        $user->gender = $request->get("gender");
+      }
 
-    if (!ConfirmationCode::isCodeMatch($action, $code)) return RestResponse::badRequest("confirmation code is not match.");
-    ConfirmationCode::remove($action);
+      if (!ConfirmationCode::isCodeMatch($key, $code)) return RestResponse::badRequest("confirmation code is not match.");
 
-    $user->save();
+      ConfirmationCode::remove($key);
+
+      if (empty($user->provider_name)) $user->provider_name = "whatsapp";
+      if (empty($user->provider_id)) $user->provider_id = "{$id}@c.us";
+      if (empty($user->phone_number)) $user->whatsapp_number = $id;
+      $user->whatsapp_number = $id;
+      $user->save();
+
+    } catch (Exception $exception) {
+      DB::rollBack();
+      return RestResponse::error($exception->getMessage());
+    }
+    DB::commit();
+
     return $this->respondWithToken(auth()->login($user));
   }
 
