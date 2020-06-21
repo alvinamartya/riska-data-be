@@ -28,8 +28,8 @@ class UpdateUserTableForWhatsappLogin extends Migration
   public function down()
   {
     Schema::table('users', function (Blueprint $table) {
-      $table->dropIndex('whatsapp_number');
-      $table->dropIndex('email');
+      $table->dropIndex('users_whatsapp_number_index');
+      $table->dropIndex('users_email_index');
     });
   }
 }
