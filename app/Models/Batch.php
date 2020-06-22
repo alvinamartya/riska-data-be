@@ -57,11 +57,6 @@ class Batch extends Model
     'deleted_by',
   ];
 
-  protected $casts = [
-    'start_date' => 'date',
-    'end_date' => 'date',
-  ];
-
   public function programs()
   {
     return $this->hasMany(Program::class);
