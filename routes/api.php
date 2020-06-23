@@ -40,6 +40,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'v1'], function () {
     Route::resource('departments', 'DepartmentController')->except(['create', 'edit']);
     Route::resource('users.events', 'UserEventController')->except(['create','edit']);
     Route::resource('users.organizations', 'UserOrganizationController')->except(['create','edit']);
+    Route::resource('talents', 'TalentController')->except(['create', 'edit']);
   });
 
   Route::resource('whatsapp-bots', 'WhatsappBotController')->except(['create','edit']);
