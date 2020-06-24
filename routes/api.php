@@ -37,10 +37,14 @@ Route::group(['prefix' => 'v1', 'namespace' => 'v1'], function () {
     Route::resource('roles.users', 'RoleMemberController')->except(['create', 'edit', 'show']);
     Route::resource('batches', 'BatchController')->except(['create', 'edit']);
     Route::resource('suggestions','SuggestionController')->except(['create', 'edit']);
+    Route::resource('suggestion-groups','SuggestionGroupController')->except(['create', 'edit', 'store', 'destroy', 'update']);
     Route::resource('departments', 'DepartmentController')->except(['create', 'edit']);
     Route::resource('users.events', 'UserEventController')->except(['create','edit']);
     Route::resource('users.organizations', 'UserOrganizationController')->except(['create','edit']);
     Route::resource('talents', 'TalentController')->except(['create', 'edit']);
+
+    Route::get('/suggestion-groups', 'SuggestionGroupController@index')->name('suggestion-groups.index');
+    Route::get('/suggestion-groups/{group}', 'SuggestionGroupController@show')->name('suggestion-groups.show');
   });
 
   Route::resource('whatsapp-bots', 'WhatsappBotController')->except(['create','edit']);
