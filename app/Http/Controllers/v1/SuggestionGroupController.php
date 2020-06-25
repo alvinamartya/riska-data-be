@@ -11,7 +11,7 @@ class SuggestionGroupController extends Controller
 
   public function index()
   {
-    return RestResponse::data(Suggestion::selectRaw("`group`, count(item) as total")->groupBy("group")->get());
+    return RestResponse::data(Suggestion::selectRaw("`group`, count(item) as total")->groupBy("group")->orderBy('group')->get());
   }
 
   public function show($group)
