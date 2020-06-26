@@ -17,7 +17,7 @@ class SuggestionGroupController extends Controller
 
   public function store(Request $request)
   {
-    if (Suggestion::whereId($request->group)->exists()) {
+    if (Suggestion::whereGroup($request->group)->exists()) {
       return RestResponse::conflict("group already exists!");
     }
 
@@ -42,7 +42,7 @@ class SuggestionGroupController extends Controller
 
   public function update(Request $request, $suggestion_group)
   {
-    if (!Suggestion::whereId($suggestion_group)->exists()) {
+    if (!Suggestion::whereGroup($suggestion_group)->exists()) {
       return RestResponse::conflict("group not exists!");
     }
 
