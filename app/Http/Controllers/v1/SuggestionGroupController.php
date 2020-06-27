@@ -5,6 +5,8 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\Http\RestResponse;
 use App\Models\Suggestion;
+use DB;
+use Exception;
 use Illuminate\Http\Request;
 
 class SuggestionGroupController extends Controller
@@ -21,22 +23,30 @@ class SuggestionGroupController extends Controller
       return RestResponse::conflict("group already exists!");
     }
 
-    foreach ($request->items as $item) {
-      $suggestion = new Suggestion();
-      $suggestion->group = $request->group;
-      $suggestion->item = $item->item;
-      $suggestion->display_text = $item->display_text;
-      $suggestion->save();
-    }
+    try {
+      DB::beginTransaction();
 
-    return RestResponse::created($suggestion);
+      foreach ($request->items as $item) {
+        $suggestion = new Suggestion();
+        $suggestion->group = $request->group;
+        $suggestion->item = $item['item'];
+        $suggestion->display_text = $item['display_text'];
+        $suggestion->save();
+      }
+    } catch (Exception $e) {
+      DB::rollBack();
+      return RestResponse::error($e->getMessage());
+    }
+    DB::commit();
+
+    return RestResponse::created(Suggestion::class);
   }
 
   public function show($suggestion_group)
   {
     return RestResponse::data([
       'group' => $suggestion_group,
-      'items' => Suggestion::whereGroup($suggestion_group)->get(['id', 'item', 'display_text'])
+      'items' => Suggestion::whereGroup($suggestion_group)->orderBy('id')->get(['id', 'item', 'display_text'])
     ]);
   }
 
@@ -46,16 +56,25 @@ class SuggestionGroupController extends Controller
       return RestResponse::conflict("group not exists!");
     }
 
-    Suggestion::whereGroup($suggestion_group)->delete();
+    try {
+      DB::beginTransaction();
 
-    foreach ($request->items as $item) {
-      $suggestion = new Suggestion();
-      $suggestion->group = $suggestion_group;
-      $suggestion->item = $item->item;
-      $suggestion->display_text = $item->display_text;
-      $suggestion->save();
+      Suggestion::whereGroup($suggestion_group)->delete();
+
+      foreach ($request->items as $item) {
+        if (empty($item['item']) || empty($item['display_text'])) throw new Exception("null on required field");
+        $suggestion = new Suggestion();
+        $suggestion->group = $suggestion_group;
+        $suggestion->item = $item['item'];
+        $suggestion->display_text = $item['display_text'];
+        $suggestion->save();
+      }
+    } catch (Exception $e) {
+      DB::rollBack();
+      return RestResponse::error($e->getMessage());
     }
+    DB::commit();
 
-    return RestResponse::updated($suggestion);
+    return RestResponse::updated(Suggestion::class);
   }
 }
