@@ -75,7 +75,7 @@ class UserController extends Controller
       DB::commit();
     } catch (Exception $e) {
       DB::rollBack();
-      return RestResponse::data(['error' => $e->getMessage(), 'record' => $record], HttpStatusCode::SERVER_ERROR);
+      return RestResponse::data(['error' => $e->getMessage()], HttpStatusCode::SERVER_ERROR);
     }
     return RestResponse::updated(User::class);
   }
